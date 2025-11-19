@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #4338CA;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #fafafa;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+
+        span.done {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Your TODOs</h1>
+
+    <!-- Add Form -->
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="Add new task..." required>
+        <button type="submit">Add</button>
+    </form>
+
+    <!-- Todo List -->
+    <ul>
+        {% for t in todos %}
+        <li>
+            <span  class="{% if t['done'] %}done{% endif %}"    >{{ t["title"] }}</span>
+
+        {% if not t["done"] %}
+        <a href="/terminer/{{ t['id'] }}"
+       style="background:#10B981; padding:6px 10px; color:white; border-radius:6px; text-decoration:none;">
+        Terminer
+        </a>
+
+    {% else %}
+    <span style="color: #10B981; font-weight:bold;">✔</span>
+    {% endif %}
+
+         <a href="/delete/{{ t['id'] }}"
+       style="background:#EB3324; padding:6px 10px; color:white; border-radius:6px; text-decoration:none;">
+        delete
+        </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+
+</div>
+
+</body>
+</html>
